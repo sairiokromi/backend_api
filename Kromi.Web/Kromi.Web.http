@@ -1,0 +1,6 @@
+@Kromi.Web_HostAddress = http://localhost:5062
+
+GET {{Kromi.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
