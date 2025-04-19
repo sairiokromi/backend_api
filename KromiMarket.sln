@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kromi.Web", "Kromi.Web\Kromi.Web.csproj", "{A89E5B82-E131-44C7-8450-B8A7EE866839}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kromi.Api", "Kromi.Api\Kromi.Api.csproj", "{A89E5B82-E131-44C7-8450-B8A7EE866839}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kromi.Domain", "Kromi.Domain\Kromi.Domain.csproj", "{61B6656C-7687-4AF4-98E5-A7B7FD240FB4}"
 EndProject

@@ -1,0 +1,26 @@
+[
+  {
+    "Pregunta": "Nombre de tu perro",
+    "EstaActivo": true
+  },
+  {
+    "Pregunta": "Nombre de tu madre",
+    "EstaActivo": true
+  },
+  {
+    "Pregunta": "Nombre de tu padre",
+    "EstaActivo": true
+  },
+  {
+    "Pregunta": "Superheroe favorito",
+    "EstaActivo": true
+  },
+  {
+    "Pregunta": "Nombre de tu pareja",
+    "EstaActivo": true
+  },
+  {
+    "Pregunta": "Persona favorita",
+    "EstaActivo": true
+  }
+]
