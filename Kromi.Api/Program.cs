@@ -8,10 +8,11 @@ using Kromi.Api.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 string corsName = "AllowSpecificOrigin";
 // Add services to the container.
+builder.ConfigureCors(corsName);
 builder.Services.AddControllers();
 builder.ConfigureSecurity();
 builder.ConfigureControlador();
-builder.ConfigureCors(corsName);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
