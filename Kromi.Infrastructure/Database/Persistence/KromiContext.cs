@@ -17,13 +17,14 @@ namespace Kromi.Infrastructure.Database.Persistence
         public virtual DbSet<UserRefreshTokens> UserRefreshTokens { get; set; }
         public virtual DbSet<PreguntaSeguridad> PreguntasSeguridad { get; set; } = null!;
         public virtual DbSet<PreguntaSeguridadUsuario> PreguntaSeguridadUsuarios { get; set; } = null!;
+        public virtual DbSet<Sucursal> Sucursal { get; set; } = null!;
 
         #region Stored procedures
         public virtual DbSet<GenericStringString> GenericStringString { get; set; }
         #endregion
 
         private readonly IJwtService _currentSessionProvider;
-        private readonly JsonSerializerOptions jsonConfig = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        private readonly JsonSerializerOptions _jsonConfig = new(){ PropertyNameCaseInsensitive = true };
 
         public KromiContext(DbContextOptions<KromiContext> options,
             IJwtService currentSessionProvider) : base(options)
@@ -262,16 +263,16 @@ namespace Kromi.Infrastructure.Database.Persistence
 
                 entity.Property(e => e.TrailType).HasConversion<string>();
                 entity.Property(e => e.ChangedColumns).HasConversion(
-                    v => JsonSerializer.Serialize(v, jsonConfig),
-                    v => JsonSerializer.Deserialize<List<string>>(v, jsonConfig) ?? new List<string>()
+                    v => JsonSerializer.Serialize(v, _jsonConfig),
+                    v => JsonSerializer.Deserialize<List<string>>(v, _jsonConfig) ?? new List<string>()
                     );
                 entity.Property(e => e.OldValues).HasConversion(
-                    v => JsonSerializer.Serialize(v, jsonConfig),
-                    v => JsonSerializer.Deserialize<Dictionary<string, object?>>(v, jsonConfig) ?? new Dictionary<string, object?>()
+                    v => JsonSerializer.Serialize(v, _jsonConfig),
+                    v => JsonSerializer.Deserialize<Dictionary<string, object?>>(v, _jsonConfig) ?? new Dictionary<string, object?>()
                     ).HasColumnType("nvarchar(max)");
                 entity.Property(e => e.NewValues).HasConversion(
-                    v => JsonSerializer.Serialize(v, jsonConfig),
-                    v => JsonSerializer.Deserialize<Dictionary<string, object?>>(v, jsonConfig) ?? new Dictionary<string, object?>()
+                    v => JsonSerializer.Serialize(v, _jsonConfig),
+                    v => JsonSerializer.Deserialize<Dictionary<string, object?>>(v, _jsonConfig) ?? new Dictionary<string, object?>()
                     ).HasColumnType("nvarchar(max)");
             });
 
@@ -306,6 +307,20 @@ namespace Kromi.Infrastructure.Database.Persistence
                 entity.Property(e => e.UserName).HasMaxLength(100);
                 entity.Property(e => e.RefreshToken).HasMaxLength(250);
                 entity.HasIndex(p => p.UserName, "IX_UserRefreshTokens_UserName");
+            });
+
+            builder.Entity<Sucursal>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Codigo).HasMaxLength(30);
+                entity.Property(e => e.Nombre).HasMaxLength(60);
+                entity.Property(e => e.Direccion).HasMaxLength(150);
+                entity.HasIndex(i => i.Codigo);
+
+                //entity.HasMany(a => a.Usuarios)
+                //    .WithOne(b => b.Sucursal)
+                //    .HasForeignKey(b => b.SucursalId)
+                //    .IsRequired(false);
             });
 
             base.OnModelCreating(builder);
