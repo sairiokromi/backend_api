@@ -46,7 +46,7 @@ namespace Kromi.Application.Services
             }
         }
 
-        public Task<UserRefreshTokens?> GetSavedRefreshTokens(string username, string refreshToken) 
+        public Task<UserRefreshTokens?> GetSavedRefreshTokens(string username, string refreshToken)
             => _context.UserRefreshTokens.FirstOrDefaultAsync(x => x.UserName == username && x.RefreshToken == refreshToken && x.IsActive);
 
         public async Task<Result<AuthResponse>> Login(AuthLoginRequest request)
@@ -88,7 +88,8 @@ namespace Kromi.Application.Services
             var refreshToken = _jwtService.GenerateRefreshToken();
             await SaveRefreshToken(user, refreshToken);
 
-            var AuthResponse = new AuthResponse {
+            var AuthResponse = new AuthResponse
+            {
                 Apellidos = user.Apellidos!,
                 Email = user.Email!,
                 EstaActivo = user.EstaActivo,

@@ -1,9 +1,9 @@
-using Kromi.Infrastructure;
-using Kromi.Application;
 using Kromi.Api.Configurations;
+using Kromi.Api.Middlewares;
+using Kromi.Application;
+using Kromi.Infrastructure;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
-using Kromi.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 string corsName = "AllowSpecificOrigin";

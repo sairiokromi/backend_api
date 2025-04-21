@@ -10,7 +10,7 @@
         public string? Telefono { get; set; }
         public string? Firma { get; set; }
         public string? Ficha { get; set; }
-        public int? SucursalId { get; set; }
+        public long? SucursalId { get; set; }
         public string? Foto { get; set; }
         public string[] Role { get; set; } = null!;
     }

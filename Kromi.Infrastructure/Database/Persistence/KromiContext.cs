@@ -24,7 +24,7 @@ namespace Kromi.Infrastructure.Database.Persistence
         #endregion
 
         private readonly IJwtService _currentSessionProvider;
-        private readonly JsonSerializerOptions _jsonConfig = new(){ PropertyNameCaseInsensitive = true };
+        private readonly JsonSerializerOptions _jsonConfig = new() { PropertyNameCaseInsensitive = true };
 
         public KromiContext(DbContextOptions<KromiContext> options,
             IJwtService currentSessionProvider) : base(options)
@@ -243,9 +243,9 @@ namespace Kromi.Infrastructure.Database.Persistence
                     .WithOne(b => b.KromiUser)
                     .HasForeignKey(b => b.UsuarioId);
 
-                //entity.HasOne(d => d.Sucursal).WithMany(p => p.Usuarios)
-                //.HasForeignKey(d => d.SucursalId)
-                //.IsRequired(false);
+                entity.HasOne(d => d.Sucursal).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.SucursalId)
+                .IsRequired(false);
             });
 
             builder.Entity<AuditTrail>(entity =>
@@ -317,10 +317,10 @@ namespace Kromi.Infrastructure.Database.Persistence
                 entity.Property(e => e.Direccion).HasMaxLength(150);
                 entity.HasIndex(i => i.Codigo);
 
-                //entity.HasMany(a => a.Usuarios)
-                //    .WithOne(b => b.Sucursal)
-                //    .HasForeignKey(b => b.SucursalId)
-                //    .IsRequired(false);
+                entity.HasMany(a => a.Usuarios)
+                    .WithOne(b => b.Sucursal)
+                    .HasForeignKey(b => b.SucursalId)
+                    .IsRequired(false);
             });
 
             base.OnModelCreating(builder);

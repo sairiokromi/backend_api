@@ -11,6 +11,6 @@ namespace Kromi.Domain.Entities
         public bool EstaActivo { get; set; } = true;
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        //public ICollection<KromiUser> Usuarios { get; set; } = null!;
+        public ICollection<KromiUser> Usuarios { get; set; } = [];
     }
 }

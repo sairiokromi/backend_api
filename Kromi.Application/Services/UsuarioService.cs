@@ -98,7 +98,7 @@ namespace Kromi.Application.Services
 
             return Result.Ok();
         }
-         
+
         public async Task<Result> CambiarStatus(CambioStatusRequest request)
         {
             var user = await _userManager.FindByIdAsync(request.CodigoUsuario);
@@ -127,7 +127,7 @@ namespace Kromi.Application.Services
         public async Task<PagedList<UsuarioDto>> ListadoUsuarios(PaginationQuery query, GenericBaseFilterQuery filters, GenericSortQuery? sort)
         {
             var data = _context.KromiUsers
-                //.Include(i => i.Sucursal)
+                .Include(i => i.Sucursal)
                 .AsNoTracking();
             if (!string.IsNullOrWhiteSpace(filters.Search))
             {
@@ -163,8 +163,8 @@ namespace Kromi.Application.Services
                     Telefono = s.PhoneNumber,
                     Firma = s.Firma,
                     UserName = s.UserName ?? "",
-                    //SucursalId = s.Sucursal?.Id,
-                    //Sucursal = s.Sucursal?.Nombre,
+                    SucursalId = s.Sucursal?.Id,
+                    Sucursal = s.Sucursal?.Nombre,
                     Roles = await _userManager.GetRolesAsync(s)
                 };
                 mapped.Add(user);
@@ -210,7 +210,7 @@ namespace Kromi.Application.Services
             user.Nombres = request.Nombres;
             user.Apellidos = request.Apellidos;
             user.PhoneNumber = request.Telefono;
-            //user.SucursalId = request.SucursalId;
+            user.SucursalId = request.SucursalId;
             user.Ficha = request.Ficha;
 
             await using var transaction = await _context.Database.BeginTransactionAsync();
@@ -267,7 +267,7 @@ namespace Kromi.Application.Services
 
         public async Task<List<GenericStringString>> ObtenerEvaluadoresSelect()
         {
-            var sql = @"SELECT u.Id, CONCAT(u.Nombres,' ' ,u.Apellidos) as Name
+            const string sql = @"SELECT u.Id, CONCAT(u.Nombres,' ' ,u.Apellidos) as Name
                         FROM [dbo].[AspNetUsers] u
                         INNER JOIN [dbo].[AspNetUserRoles] ur on u.Id = ur.UserId
                         INNER JOIN [dbo].[AspNetRoles] r on ur.RoleId = r.Id
@@ -303,7 +303,7 @@ namespace Kromi.Application.Services
                 Apellidos = request.Apellidos,
                 Ficha = request.Ficha,
                 PhoneNumber = request.Telefono,
-                //SucursalId = request.SucursalId,
+                SucursalId = request.SucursalId,
             };
             await using var transaction = await _context.Database.BeginTransactionAsync();
             try

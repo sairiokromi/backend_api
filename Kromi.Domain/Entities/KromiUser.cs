@@ -16,6 +16,8 @@ namespace Kromi.Domain.Entities
         public string? Firma { get; set; }
         public string? Ficha { get; set; }
         public DateTime? BloqueadoEl { get; set; }
+        public long? SucursalId { get; set; }
+        public Sucursal Sucursal { get; set; } = null!;
         public ICollection<PreguntaSeguridadUsuario> PreguntaSeguridadUsuario { get; set; } = [];
     }
 }

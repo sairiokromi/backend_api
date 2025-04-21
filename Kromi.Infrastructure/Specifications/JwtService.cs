@@ -27,8 +27,8 @@ namespace Kromi.Infrastructure.Specifications
             .FirstOrDefault(f => f.Type == JwtRegisteredClaimNames.Name)?.Value;
 
         public string? GetSessionUserId()
-        => (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext!.User?.Claims != null) 
-                ? _httpContextAccessor.HttpContext!.User?.Claims?.FirstOrDefault(f => f.Type == JwtRegisteredClaimNames.NameId)?.Value 
+        => (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext!.User?.Claims != null)
+                ? _httpContextAccessor.HttpContext!.User?.Claims?.FirstOrDefault(f => f.Type == JwtRegisteredClaimNames.NameId)?.Value
                 : null;
 
         public string GenerateAccessToken(IEnumerable<Claim> claims)

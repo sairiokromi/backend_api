@@ -7,7 +7,7 @@
 
         public GenericStringString()
         {
-            
+
         }
 
         public GenericStringString(string id, string name)

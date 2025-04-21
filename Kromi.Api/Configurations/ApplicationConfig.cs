@@ -1,6 +1,5 @@
 ﻿using FluentResults;
 using Kromi.Domain.Entities;
-using Kromi.Infrastructure.Database.Audit;
 using Kromi.Infrastructure.Database.Persistence;
 using Kromi.Infrastructure.SettingsModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -136,6 +136,8 @@ namespace Kromi.Api.Configurations
                 };
 
                 c.AddSecurityRequirement(securityRequirement);
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
         }
 

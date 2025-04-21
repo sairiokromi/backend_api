@@ -3,9 +3,9 @@ using Kromi.Infrastructure.Database.Audit;
 using Kromi.Infrastructure.Database.Persistence;
 using Kromi.Infrastructure.SettingsModels;
 using Kromi.Infrastructure.Specifications;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kromi.Infrastructure
 {
@@ -15,7 +15,8 @@ namespace Kromi.Infrastructure
         {
             #region Base de datos
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<KromiContext>((provider, options) => {
+            services.AddDbContext<KromiContext>((provider, options) =>
+            {
                 options.UseSqlServer(connectionString);
                 var interceptor = provider.GetRequiredService<AuditableInterceptor>();
                 options.EnableSensitiveDataLogging()

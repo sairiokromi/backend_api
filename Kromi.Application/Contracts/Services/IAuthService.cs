@@ -2,11 +2,6 @@
 using Kromi.Application.Data.Dto.Auth;
 using Kromi.Domain.Entities;
 using Kromi.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Kromi.Application.Contracts.Services
 {
