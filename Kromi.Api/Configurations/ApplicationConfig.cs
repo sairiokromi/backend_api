@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Serilog.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
@@ -143,7 +144,18 @@ namespace Kromi.Api.Configurations
 
         public static void ConfigureSerilog(this WebApplicationBuilder builder)
         {
-            builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            builder.Host.UseSerilog((ctx, lc) => lc
+                .Enrich.WithProperty("Environment", environment)
+                .Enrich.WithCorrelationId()
+                .Enrich.WithClientIp()
+                .Enrich.WithThreadName()
+                .Enrich.WithMachineName()
+                .Enrich.WithExceptionDetails()
+                .WriteTo.Console()
+                .Enrich.WithRequestHeader("User-Agent")
+                .WriteTo.Async(a => a.File("Log/kromi.log", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning, rollingInterval: RollingInterval.Day))
+                .WriteTo.Debug());
         }
 
         public static async Task Migrar(this WebApplication app)

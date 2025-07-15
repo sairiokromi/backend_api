@@ -28,7 +28,7 @@ namespace Kromi.Infrastructure.Specifications
 
         public string? GetSessionUserId()
         => (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext!.User?.Claims != null)
-                ? _httpContextAccessor.HttpContext!.User?.Claims?.FirstOrDefault(f => f.Type == JwtRegisteredClaimNames.NameId)?.Value
+                ? _httpContextAccessor.HttpContext!.User?.Claims?.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier)?.Value
                 : null;
 
         public string GenerateAccessToken(IEnumerable<Claim> claims)
@@ -58,7 +58,7 @@ namespace Kromi.Infrastructure.Specifications
         {
             var claims = new List<Claim> {
                 new (JwtRegisteredClaimNames.Name, usuario.UserName!),
-                new (JwtRegisteredClaimNames.NameId, usuario.Id)
+                new (ClaimTypes.NameIdentifier, usuario.Id)
             };
             foreach (var role in roles!)
             {
