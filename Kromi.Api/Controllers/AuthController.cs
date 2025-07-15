@@ -42,5 +42,11 @@ namespace Kromi.Api.Controllers
             }
             return Forbid();
         }
+
+        [HttpGet("PingToken")]
+        public IActionResult PingToken()
+        {
+            return Ok(new { Message = "Token is valid" });
+        }
     }
 }
